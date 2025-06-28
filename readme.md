@@ -1,8 +1,4 @@
-# 🚀 API RESTful de Usuários e Tarefas com Node.js
-
-Este projeto é uma API simples desenvolvida em **Node.js** com **Express.js**, que permite o cadastro de usuários e o gerenciamento de tarefas (CRUD), utilizando armazenamento **em memória**
-
----
+# 🚀 API RESTful de Usuários e Tarefas
 
 ## 📚 Funcionalidades
 
