@@ -6,7 +6,6 @@
 - ✅ CRUD completo de usuários (Create, Read, Update, Delete)
 - ✅ CRUD completo de tarefas (Create, Read, Update, Delete)
 - ✅ Campo de status nas tarefas: `pendente`, `em andamento`, `concluída`
-- ✅ Logs de requisição e resposta no console
 
 > Os dados ficam em memória enquanto o servidor está rodando.
 
