@@ -1,46 +1,49 @@
-// service/taskService.js
-const taskRepository = require('../repository/taskRepository'); // Importa o repositório
+let tasks = [];
+let taskIdCounter = 1;
 
-exports.getAllTasks = () => {
-    return taskRepository.findAll();
-};
+function listar() {
+  return tasks;
+}
 
-exports.getTaskById = (id) => {
-    const taskId = parseInt(id);
-    if (isNaN(taskId)) {
-        throw new Error('ID da tarefa inválido. Deve ser um número.');
-    }
-    return taskRepository.findById(taskId);
-};
+function inserir(data) {
+  const nova = {
+    id: taskIdCounter++,
+    titulo: data.titulo,
+    descricao: data.descricao,
+    usuarioId: parseInt(data.usuarioId),
+    status: data.status || "pendente" // valor padrão
+  };
+  tasks.push(nova);
+  return nova;
+}
 
-exports.createTask = (taskData) => {
-    if (!taskData || typeof taskData.title !== 'string' || taskData.title.trim() === '') {
-        throw new new Error('Dados da tarefa inválidos. O título é obrigatório e deve ser uma string não vazia.');
-    }
-    return taskRepository.create(taskData);
-};
+function buscarPorId(id) {
+  return tasks.find(t => t.id === parseInt(id));
+}
 
-exports.updateTask = (id, taskData) => {
-    const taskId = parseInt(id);
-    if (isNaN(taskId)) {
-        throw new Error('ID da tarefa inválido para atualização. Deve ser um número.');
-    }
-    const existingTask = taskRepository.findById(taskId);
-    if (!existingTask) {
-        return null;
-    }
-    if (taskData.status && !['pendente', 'em progresso', 'concluída'].includes(taskData.status)) {
-        throw new Error('Status da tarefa inválido.');
-    }
-    return taskRepository.update(taskId, taskData);
-};
+function atualizar(id, data) {
+  const task = tasks.find(t => t.id === parseInt(id));
+  if (!task) return null;
 
-// --- A ALTERAÇÃO FOI FEITA APENAS AQUI NESTA FUNÇÃO ---
-exports.deleteTask = (id) => {
-    const taskId = parseInt(id);
-    if (isNaN(taskId)) {
-        throw new Error('ID da tarefa inválido para exclusão. Deve ser um número.');
-    }
-    // A linha abaixo foi alterada de 'taskRepository.xyz(taskId)' para 'taskRepository.delete(taskId)'
-    taskRepository.delete(taskId); // <--- AGORA ESTÁ CORRETO!
+  task.titulo = data.titulo || task.titulo;
+  task.descricao = data.descricao || task.descricao;
+  task.usuarioId = data.usuarioId || task.usuarioId;
+  task.status = data.status || task.status;
+
+  return task;
+}
+
+function deletar(id) {
+  const index = tasks.findIndex(t => t.id === parseInt(id));
+  if (index === -1) return null;
+
+  return tasks.splice(index, 1)[0];
+}
+
+module.exports = { 
+    listar, 
+    inserir, 
+    buscarPorId, 
+    atualizar, 
+    deletar 
 };
