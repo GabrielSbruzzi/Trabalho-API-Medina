@@ -1,31 +1,19 @@
-# 🚀 API RESTful de Usuários e Tarefas com JWT e PostgreSQL
+````markdown
+# 🚀 API RESTful de Usuários e Tarefas com Node.js
 
-Este projeto é uma API desenvolvida em **Node.js** com **Express.js**, que permite o cadastro de usuários, autenticação via JWT e gerenciamento de tarefas. Os dados agora são armazenados em um **banco de dados PostgreSQL**.
+Este projeto é uma API simples desenvolvida em **Node.js** com **Express.js**, que permite o cadastro de usuários e o gerenciamento de tarefas (CRUD), utilizando armazenamento **em memória**
 
 ---
 
 ## 📚 Funcionalidades
 
 - ✅ Cadastro de usuários
-- ✅ Login com autenticação JWT
-- ✅ CRUD de tarefas (Create, Read, Update, Delete)
-- ✅ Proteção de rotas com middleware JWT
-- ✅ Integração com banco de dados PostgreSQL
-- ✅ Documentação com Swagger UI
+- ✅ CRUD completo de usuários (Create, Read, Update, Delete)
+- ✅ CRUD completo de tarefas (Create, Read, Update, Delete)
+- ✅ Campo de status nas tarefas: `pendente`, `em andamento`, `concluída`
+- ✅ Logs de requisição e resposta no console
 
----
-
-## 🧪 Tecnologias utilizadas
-
-- Node.js
-- Express.js
-- PostgreSQL
-- Sequelize (ORM)
-- bcryptjs (criptografia de senha)
-- jsonwebtoken (JWT)
-- uuid (gerador de ID único)
-- swagger-ui-express
-- dotenv (variáveis de ambiente)
+> Os dados ficam em memória enquanto o servidor está rodando.
 
 ---
 
@@ -34,7 +22,7 @@ Este projeto é uma API desenvolvida em **Node.js** com **Express.js**, que perm
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/GabrielSbruzzi/Projeto-API.git
+git clone https://github.com/GabrielSbruzzi/Trabalho-API-Medina.git
 ````
 
 2. Instale as dependências:
@@ -49,62 +37,25 @@ npm install
 node server.js
 ```
 
-Por padrão, o servidor será iniciado em `http://localhost:3000`.
-
----
-
-## 🔐 Autenticação
-
-Após o login, você receberá um token JWT. Use-o no cabeçalho das requisições protegidas:
-
-```
-Authorization: Bearer <seu-token>
-```
-
----
-
-## 📘 Documentação com Swagger
-
-A documentação da API está disponível em:
-
-```
-http://localhost:3000/api-docs
-```
-
----
-
-## 📂 Estrutura do Projeto
-
-```
-.
-├── controllers/       # Lógica de entrada (HTTP)
-├── service/           # Regras de negócio
-├── repository/        # Simula banco de dados (em memória)
-├── middleware/        # Autenticação JWT
-├── routes/            # Arquivos de rotas
-├── tests/             # Testes
-├── swagger.json       # Configuração da documentação
-├── server.js          # Inicialização da aplicação
-├── app.js             # Rotas públicas e Protegidas
-└── README.md
-```
+O servidor será iniciado em `http://localhost:3000`.
 
 ---
 
 ## ✉️ Endpoints principais
 
-### 🔐 Autenticação
-
-* `POST /auth/login` → Gera e retorna o token JWT
-
 ### 👤 Usuários
 
 * `POST /users` → Cria novo usuário
 * `GET /users` → Lista todos os usuários
+* `GET /users/:id` → Busca usuário por ID
+* `PUT /users/:id` → Atualiza um usuário
+* `DELETE /users/:id` → Remove um usuário
 
-### ✅ Tarefas (requer token JWT)
+---
 
-* `POST /tasks` → Cria nova tarefa
+### ✅ Tarefas
+
+* `POST /tasks` → Cria nova tarefa (com status)
 * `GET /tasks` → Lista todas as tarefas
 * `GET /tasks/:id` → Busca uma tarefa específica
 * `PUT /tasks/:id` → Atualiza uma tarefa
@@ -112,6 +63,7 @@ http://localhost:3000/api-docs
 
 ---
 
-## 📝 Licença
+## 📝 Observações
 
-Este projeto está licenciado sob a licença MIT.
+* As tarefas têm um campo `status` com valor padrão `"pendente"` caso não seja informado.
+* Os dados são perdidos ao reiniciar o servidor
